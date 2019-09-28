@@ -1,0 +1,42 @@
+<app-toolbar [titulo]="titulo" (menuClick)="cambiarVisibilidad()"></app-toolbar>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="sidenav mat-elevation-z4" #sidenav mode="side" opened="true">
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <h2>Menú</h2>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-nav-list>
+            <!-- Ejercicio 1: usar *ngFor para generar los menús -->
+            <a mat-list-item [routerLink]="['/']" routerLinkActive="list-item-active">
+                <mat-icon matListIcon>group_work</mat-icon>
+                Unirse
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item [routerLink]="['/']" routerLinkActive="list-item-active">
+                <mat-icon matListIcon>history</mat-icon>
+                Eventos realizados
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item [routerLink]="['/']" routerLinkActive="list-item-active">
+                <mat-icon matListIcon>calendar_today</mat-icon>
+                Próximos eventos
+            </a>
+            <mat-divider></mat-divider>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <h1>Eventos NgPopayán</h1>
+        <ul>
+            <li *ngFor="let evento of eventos">
+                <h2>{{evento.titulo}}</h2>
+                <h3>{{evento.fecha | date }}</h3>
+                <button (click)="onClickVer(evento)" *ngIf="esFechaPasada(evento.fecha)" mat-raised-button>Ver</button>
+                <button *ngIf="!esFechaPasada(evento.fecha)" mat-raised-button color="primary">Inscribirse</button>
+            </li>
+        </ul>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

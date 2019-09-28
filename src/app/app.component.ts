@@ -6,18 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
-
-
-  title = 'ng-popayan';
   ngOnInit(): void {
-    let cadena: any = "cualquier cosa";
-    console.log((cadena as string).length));
   }
-
 }
 
-export enum Color {
-  ROJO,
-  VERDE
-}
