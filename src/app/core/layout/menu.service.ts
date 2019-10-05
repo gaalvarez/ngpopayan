@@ -7,16 +7,16 @@ export class MenuService {
 
   itemsMenu: MenuItem[] = [
     {
-      titulo: 'Inicio', ruta: '/'
+      titulo: 'Inicio', ruta: '/home'
     },
     {
-      icono: 'group_work', titulo: 'Unirse', ruta: '/'
+      icono: 'group_work', titulo: 'Unirse', ruta: '/registro/registro-integrante'
     },
     {
-      icono: 'history', titulo: 'Eventos realizados', ruta: '/'
+      icono: 'history', titulo: 'Eventos realizados', ruta: '/eventos/eventos-realizados'
     },
     {
-      icono: 'calendar_today', titulo: 'Próximos eventos', ruta: '/'
+      icono: 'calendar_today', titulo: 'Próximos eventos', ruta: '/eventos/proximos-eventos'
     }
   ];
 

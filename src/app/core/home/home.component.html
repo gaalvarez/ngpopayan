@@ -1,0 +1,50 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="start" class="container-layout">
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+        <a class="card-link">
+            <mat-card class="main-map-card">
+                <mat-card-header>
+                    <mat-icon>group_work</mat-icon>
+                    <mat-card-title>Unirse</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    Registrate como integrante de la comunidad NgPopayán.
+                </mat-card-content>
+                <mat-card-actions>
+                    <button color="accent" (click)="navegar('/registro/registro-integrante')" mat-raised-button>Registrarse</button>
+                </mat-card-actions>
+            </mat-card>
+        </a>
+    </div>
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+        <a class="card-link">
+            <mat-card class="historical-map-card">
+                <mat-card-header>
+                    <mat-icon>history</mat-icon>
+                    <mat-card-title>Eventos Realizados</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    Revisa todos los recursos disponibles de cada encuentro.
+                </mat-card-content>
+                <mat-card-actions>
+                    <button color="accent" (click)="navegar('/eventos/eventos-realizados')" mat-raised-button>Ver</button>
+                </mat-card-actions>
+            </mat-card>
+        </a>
+    </div>
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+        <a class="card-link">
+            <mat-card class="events-map-card">
+                <mat-card-header>
+                    <mat-icon>calendar_today</mat-icon>
+                    <mat-card-title>Próximos Eventos</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    Revisa los eventos que están por realizarse e inscribite para partircipar.
+                </mat-card-content>
+                <mat-card-actions>
+                    <button color="accent" (click)="navegar('/eventos/proximos-eventos')" mat-raised-button>Ver</button>
+                </mat-card-actions>
+            </mat-card>
+        </a>
+    </div>
+</div>

@@ -10,18 +10,22 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    HomeComponent
   ],
   providers: [],
   exports: [
     NavbarComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,8 @@ import { RouterModule } from '@angular/router';
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ]
 })
 export class CoreModule {

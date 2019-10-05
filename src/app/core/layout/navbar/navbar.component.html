@@ -10,7 +10,7 @@
         <mat-nav-list>
             <!-- Ejercicio 1: usar *ngFor para generar los menús -->
             <ng-container *ngFor="let item of menuItems">
-                <a mat-list-item [routerLink]="['/']" routerLinkActive="list-item-active">
+                <a mat-list-item [routerLink]="item.ruta" routerLinkActive="list-item-active">
                     <mat-icon matListIcon *ngIf="item.icono else iconoDefecto">{{item.icono}}</mat-icon>
                     <ng-template #iconoDefecto>
                         <mat-icon matListIcon>list</mat-icon>
@@ -23,7 +23,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <h1>Eventos NgPopayán</h1>
+        <!-- <h1>Eventos NgPopayán</h1>
         <ul>
             <li *ngFor="let evento of eventos">
                 <h2>{{evento.titulo}}</h2>
@@ -31,7 +31,7 @@
                 <button (click)="onClickVer(evento)" *ngIf="esFechaPasada(evento.fecha)" mat-raised-button>Ver</button>
                 <button *ngIf="!esFechaPasada(evento.fecha)" mat-raised-button color="accent">Inscribirse</button>
             </li>
-        </ul>
+        </ul> -->
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 
