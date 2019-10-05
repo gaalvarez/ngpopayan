@@ -7,6 +7,9 @@ export class MenuService {
 
   itemsMenu: MenuItem[] = [
     {
+      titulo: 'Inicio', ruta: '/'
+    },
+    {
       icono: 'group_work', titulo: 'Unirse', ruta: '/'
     },
     {
@@ -25,7 +28,7 @@ export class MenuService {
 }
 
 export interface MenuItem {
-  icono: string;
+  icono?: string;
   titulo: string;
   ruta?: string;
 }

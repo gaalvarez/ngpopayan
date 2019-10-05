@@ -1,5 +1,8 @@
+import {map} from 'rxjs/internal/operators';
+import {Breakpoints, BreakpointObserver} from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
-import { MenuService } from '../menu.service';
+import { MenuService, MenuItem } from '../menu.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -9,22 +12,31 @@ import { MenuService } from '../menu.service';
 export class NavbarComponent implements OnInit {
 
   titulo = '@ngPopayan';
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches)
+    );
 
   eventos = [
     { titulo: 'Arquitectura', fecha: new Date('5/05/2019 15:00:00') },
     { titulo: 'RxJs 1', fecha: new Date('5/06/2019 15:00:00') },
-    { titulo: 'RxJs 2', fecha: new Date('5/07/2019 15:00:00') },
     { titulo: 'Primeros pasos', fecha: new Date('5/08/2019 15:00:00') },
     { titulo: 'Formularios con Angular', fecha: new Date('10/10/2019 15:00:00') }
   ];
 
-  menuItems = [];
+  menuItems: MenuItem[] = [];
+  isOpenSidenav = true;
 
-  constructor(public menuService: MenuService) {
+  constructor(
+    public menuService: MenuService,
+    private breakpointObserver: BreakpointObserver) {
     this.menuItems = this.menuService.getItemsMenu();
   }
 
   ngOnInit() {
+    this.isHandset$.subscribe(result => {
+      this.isOpenSidenav = !result;
+    });
   }
 
   esFechaPasada(fecha: Date): boolean {
@@ -37,6 +49,6 @@ export class NavbarComponent implements OnInit {
   }
 
   cambiarVisibilidad() {
-    window.alert('Click botón en toolbar');
+    this.isOpenSidenav = !this.isOpenSidenav;
   }
 }

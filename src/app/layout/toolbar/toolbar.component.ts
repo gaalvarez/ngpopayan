@@ -9,6 +9,7 @@ export class ToolbarComponent implements OnInit {
 
   @Input()
   titulo = 'Ng Popayán';
+  isOpenSidenav = true;
 
   @Output()
   menuClick: EventEmitter<any> = new EventEmitter();
@@ -19,6 +20,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   onClickMenu() {
+    this.isOpenSidenav = !this.isOpenSidenav;
     this.menuClick.emit();
   }
 
