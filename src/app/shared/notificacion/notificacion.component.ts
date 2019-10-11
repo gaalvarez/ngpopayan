@@ -8,20 +8,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class NotificacionComponent implements OnInit {
 
-  @Input() duracion = 5000; // 5 seg por defecto
-  @Input() mensaje = 'Notificacion Simple';
-  @Input() abrirAutomatico: boolean = true;
+  @Input() configuracion: ConfigNotificacion = {
+    duracion: 5000,
+    mensaje: '',
+    abrirAutomatico: true
+  };
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snack: MatSnackBar) { }
 
   ngOnInit() {
-    if (this.abrirAutomatico) {
-      this.openSnackBar();
+    if (this.configuracion.abrirAutomatico) {
+      this.abrirNotificacion();
     }
   }
 
-  openSnackBar() {
-    this.snackBar.open(this.mensaje, 'Cerrar', { duration: this.duracion });
+  abrirNotificacion() {
+    this.snack.open(this.configuracion.mensaje, 'Cerrar', { duration: this.configuracion.duracion });
   }
 
+}
+
+export interface ConfigNotificacion {
+  duracion?: number;
+  mensaje: string;
+  abrirAutomatico?: boolean;
 }

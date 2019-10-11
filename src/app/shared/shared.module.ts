@@ -1,4 +1,4 @@
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificacionComponent } from './notificacion/notificacion.component';
@@ -12,16 +12,15 @@ import { NotificacionComponent } from './notificacion/notificacion.component';
     CommonModule,
     MatSnackBarModule
   ],
-  exports: [
-    NotificacionComponent
-  ]
+  exports: [NotificacionComponent]
 })
 export class SharedModule {
 
   static forRoot() {
     return {
       ngModule: SharedModule,
-      providers: []// si se necesitan servicios van aquí
+      providers: []
     };
   }
+
 }

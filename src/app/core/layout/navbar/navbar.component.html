@@ -23,15 +23,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <!-- <h1>Eventos NgPopayán</h1>
-        <ul>
-            <li *ngFor="let evento of eventos">
-                <h2>{{evento.titulo}}</h2>
-                <h3>{{evento.fecha | date }}</h3>
-                <button (click)="onClickVer(evento)" *ngIf="esFechaPasada(evento.fecha)" mat-raised-button>Ver</button>
-                <button *ngIf="!esFechaPasada(evento.fecha)" mat-raised-button color="accent">Inscribirse</button>
-            </li>
-        </ul> -->
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 

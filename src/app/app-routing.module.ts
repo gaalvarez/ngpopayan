@@ -4,10 +4,7 @@ import { HomeComponent } from './core/home/home.component';
 
 
 const routes: Routes = [
-  {
-    path: 'home',
-    component: HomeComponent,
-  },
+  { path: 'home', component: HomeComponent },
   {
     path: 'registro', loadChildren: () =>
       import('./features/registro/registro.module')
@@ -18,7 +15,6 @@ const routes: Routes = [
       import('./features/eventos/eventos.module')
         .then(m => m.EventosModule)
   },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
