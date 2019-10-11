@@ -6,13 +6,21 @@ import { EventosRealizadosComponent } from './eventos-realizados/eventos-realiza
 import { ProximosEventosComponent } from './proximos-eventos/proximos-eventos.component';
 import { DetalleEventoComponent } from './detalle-evento/detalle-evento.component';
 import { EventoService } from './evento.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
   declarations: [EventosRealizadosComponent, ProximosEventosComponent, DetalleEventoComponent],
   imports: [
     CommonModule,
-    EventosRoutingModule
+    EventosRoutingModule,
+    MatCardModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatButtonModule
   ],
   providers: [EventoService]
 })
