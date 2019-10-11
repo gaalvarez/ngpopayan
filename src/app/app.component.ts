@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigNotificacion } from './shared/notificacion/notificacion.component';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  config: ConfigNotificacion = { mensaje: 'Prueba desde objeto', abrirAutomatico: true };
+
   ngOnInit(): void {
   }
 }

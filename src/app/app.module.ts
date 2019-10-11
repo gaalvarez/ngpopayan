@@ -6,32 +6,25 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToolbarComponent } from './layout/toolbar/toolbar.component';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { NavbarComponent } from './layout/navbar/navbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ToolbarComponent,
-    NavbarComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule
+    CoreModule,
+    SharedModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
