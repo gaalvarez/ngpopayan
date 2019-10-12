@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IntegranteModel } from './integrante.model';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registro-integrante',
@@ -8,16 +8,15 @@ import { IntegranteModel } from './integrante.model';
 })
 export class RegistroIntegranteComponent implements OnInit {
 
-  integrante: IntegranteModel = {
-    nombres: '',
-    apellidos: '',
-    correo: '',
-    numeroCelular: '',
-    empresaInstitucion: '',
-    genero: '',
-  };
+  registroForm = this.fb.group({
+    nombres: ['', Validators.required],
+    apellidos: ['', Validators.required],
+    correo: ['', [Validators.required, Validators.email]],
+    celular: ['', Validators.minLength(10)],
+    genero: ['']
+  });
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }

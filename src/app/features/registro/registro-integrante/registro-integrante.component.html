@@ -1,43 +1,37 @@
-<form #registroForm="ngForm" fxLayout="row" fxLayoutAlign="center" class="registro-container">
+<form [formGroup]="registroForm" fxLayout="row" fxLayoutAlign="center" class="registro-container">
     <mat-card fxFlex="80%" fxFlex.lt-md="75" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutAlign="start start">
         <mat-form-field>
-            <input matInput placeholder="Nombres" [(ngModel)]="integrante.nombres" name="nombres" #nombres="ngModel"
-                required>
-            <mat-error *ngIf="nombres.errors?.required">Debe ingresar un nombre</mat-error>
+            <input matInput placeholder="Nombres" name="nombres" formControlName="nombres" required>
+            <mat-error *ngIf="registroForm.get('nombres').errors?.required">Debe ingresar un nombre</mat-error>
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Apellidos" [(ngModel)]="integrante.apellidos" name="apellidos" required>
+            <input matInput placeholder="Apellidos" name="apellidos" formControlName="apellidos" required>
         </mat-form-field>
 
         <mat-form-field>
-            <input type="email" matInput placeholder="Correo electrónico" [(ngModel)]="integrante.correo" name="correo"
-                required email #correo="ngModel">
-            <mat-error *ngIf="correo.errors?.required">Debe ingresar un nombre</mat-error>
-            <mat-error *ngIf="nombres.errors?.email">
-                Ingrese un formato de correo correcto
-            </mat-error>
+            <input matInput placeholder="Correo electrónico" name="correo" formControlName="correo" required>
         </mat-form-field>
 
         <mat-form-field>
-            <input type="number" matInput placeholder="Celular" [(ngModel)]="integrante.numeroCelular" name="celular">
+            <input matInput placeholder="Celular" formControlName="celular">
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Empresa o Institución" [(ngModel)]="integrante.empresaInstitucion"
-                name="empresa">
+            <input matInput placeholder="Empresa o Institución" name="empresa" formControlName="empresa">
         </mat-form-field>
 
         <mat-form-field>
-            <mat-select placeholder="Genero" [(ngModel)]="integrante.genero" name="genero" required>
+            <mat-select placeholder="Genero" name="genero" formControlName="genero">
                 <mat-option value="M">Masculino</mat-option>
                 <mat-option value="F">Femenino</mat-option>
-                <mat-option value="O">Otro</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <button [disabled]="!registroForm.form.valid" mat-raised-button color="accent">
+        <button [disabled]="!registroForm.valid" mat-raised-button color="accent">
             Registrarse
         </button>
+        <p>Valores del formulario: {{registroForm.value | json}}</p>
+        <p>Estado del formulario: {{registroForm.status}}</p>
     </mat-card>
 </form>
