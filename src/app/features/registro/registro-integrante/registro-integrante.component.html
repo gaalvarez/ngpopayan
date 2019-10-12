@@ -1,1 +1,43 @@
-<p>registro-integrante works!</p>
+<form #registroForm="ngForm" fxLayout="row" fxLayoutAlign="center" class="registro-container">
+    <mat-card fxFlex="80%" fxFlex.lt-md="75" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutAlign="start start">
+        <mat-form-field>
+            <input matInput placeholder="Nombres" [(ngModel)]="integrante.nombres" name="nombres" #nombres="ngModel"
+                required>
+            <mat-error *ngIf="nombres.errors?.required">Debe ingresar un nombre</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Apellidos" [(ngModel)]="integrante.apellidos" name="apellidos" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="email" matInput placeholder="Correo electrónico" [(ngModel)]="integrante.correo" name="correo"
+                required email #correo="ngModel">
+            <mat-error *ngIf="correo.errors?.required">Debe ingresar un nombre</mat-error>
+            <mat-error *ngIf="nombres.errors?.email">
+                Ingrese un formato de correo correcto
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput placeholder="Celular" [(ngModel)]="integrante.numeroCelular" name="celular">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Empresa o Institución" [(ngModel)]="integrante.empresaInstitucion"
+                name="empresa">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Genero" [(ngModel)]="integrante.genero" name="genero" required>
+                <mat-option value="M">Masculino</mat-option>
+                <mat-option value="F">Femenino</mat-option>
+                <mat-option value="O">Otro</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button [disabled]="!registroForm.form.valid" mat-raised-button color="accent">
+            Registrarse
+        </button>
+    </mat-card>
+</form>
