@@ -1,5 +1,5 @@
 <div fxLayout="column wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="start" class="container-layout">
-    <div *appCarousel="let evento from eventos autoplay 'on' withDelay 5000; let ctrl = controller">
+    <div *appCarousel="let evento from eventos | filterEventos autoplay 'on' withDelay 5000; let ctrl = controller">
         <mat-card class="main-map-card">
             <mat-card-header>
                 <mat-icon>group_work</mat-icon>

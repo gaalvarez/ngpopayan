@@ -27,6 +27,12 @@ export class EventoService {
       titulo: 'Formularios con Angular',
       fecha: new Date('10/10/2019 15:00:00'),
       descripcion: 'Sesión donde se revisan las opciones de trabajar con formularios en las aplicaciones angular'
+    },
+    {
+      id: 5,
+      titulo: 'Flex Layout',
+      fecha: new Date('12/10/2019 15:00:00'),
+      descripcion: 'Aprender a definir la composición de layouts usando flex-layout de angular.'
     }
   ];
 
