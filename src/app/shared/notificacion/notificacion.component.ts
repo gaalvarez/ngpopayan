@@ -26,6 +26,10 @@ export class NotificacionComponent implements OnInit {
     this.snack.open(this.configuracion.mensaje, 'Cerrar', { duration: this.configuracion.duracion });
   }
 
+  abrirNotificacionMsj(msj: string) {
+    this.snack.open(msj, 'Cerrar', { duration: this.configuracion.duracion });
+  }
+
 }
 
 export interface ConfigNotificacion {

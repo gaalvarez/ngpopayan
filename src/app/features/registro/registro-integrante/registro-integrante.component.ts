@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { IntegranteModel } from './integrante.model';
+import { RegistroIntegranteService } from '../registro-integrante.service';
+import { ConfigNotificacion, NotificacionComponent } from 'src/app/shared/notificacion/notificacion.component';
 
 @Component({
   selector: 'app-registro-integrante',
@@ -8,17 +11,44 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class RegistroIntegranteComponent implements OnInit {
 
-  registroForm = this.fb.group({
+  @ViewChild('noti', { static: false }) noti: NotificacionComponent;
+
+  registroForm: FormGroup = this.fb.group({
     nombres: ['', Validators.required],
     apellidos: ['', Validators.required],
     correo: ['', [Validators.required, Validators.email]],
-    celular: ['', Validators.minLength(10)],
+    celular: [''],
+    empresa: [''],
     genero: ['']
   });
 
-  constructor(private fb: FormBuilder) { }
+  configuracion: ConfigNotificacion = {
+    duracion: 5000,
+    mensaje: '',
+    abrirAutomatico: false
+  };
+
+  constructor(private fb: FormBuilder, private sri: RegistroIntegranteService) { }
 
   ngOnInit() {
+
+  }
+
+  registrarIntegrante() {
+    const integrante = this.registroForm.value as IntegranteModel;
+    this.sri.guardarIntegrante(integrante).subscribe(
+      result => {
+        if (result) {
+          this.noti.abrirNotificacionMsj('Usuario creado exitosamente');
+          this.registroForm.reset();
+        }
+      },
+      error => {
+        this.noti.abrirNotificacionMsj('Error creado usuario');
+      }
+    );
+
+
   }
 
 }
