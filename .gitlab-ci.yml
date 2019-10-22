@@ -1,0 +1,11 @@
+image: docker:stable
+services:
+  - name: docker:dind
+before_script:
+  - docker info
+  - echo "gaalvarez123" | docker login -u "gaalvarez" --password-stdin
+build:
+  stage: build
+  script:
+  - docker build -f Dockerfile -t gaalvarez/ng-popayan:1.0.0-SNAPSHOT --build-arg configuration="" . 
+  - docker push gaalvarez/ng-popayan:1.0.0-SNAPSHOT
