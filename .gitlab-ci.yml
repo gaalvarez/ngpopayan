@@ -1,11 +1,12 @@
 image: docker:stable
 services:
   - name: docker:dind
+    command: ["--insecure-registry=192.168.0.82:1789"]
 before_script:
   - docker info
-  - echo "gaalvarez123" | docker login -u "gaalvarez" --password-stdin
+  - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin "$REGISTRY_URL"
 build:
   stage: build
   script:
-  - docker build -f Dockerfile -t gaalvarez/ng-popayan:1.0.0-SNAPSHOT --build-arg configuration="" . 
-  - docker push gaalvarez/ng-popayan:1.0.0-SNAPSHOT
+  - docker build -f Dockerfile -t "$REGISTRY_URL"/ng-popayan:1.0.0-SNAPSHOT --build-arg configuration="" . 
+  - docker push "$REGISTRY_URL"/ng-popayan:1.0.0-SNAPSHOT
