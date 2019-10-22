@@ -2,6 +2,11 @@ image: docker:stable
 services:
   - name: docker:dind
     command: ["--insecure-registry=192.168.0.82:1789"]
+variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    # See https://github.com/docker-library/docker/pull/166
+    DOCKER_TLS_CERTDIR: ""
 before_script:
   - docker info
   - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin "$REGISTRY_URL"
