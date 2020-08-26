@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuService, MenuItem } from 'src/app/core/layout/menu.service';
-import { EstructuraIngresoModel, GrupoNodeModel } from './model';
+import { EstructuraIngresoModel, GrupoNodeModel, datos } from './model';
 
 @Component({
   selector: 'app-home',
@@ -10,19 +10,28 @@ import { EstructuraIngresoModel, GrupoNodeModel } from './model';
 })
 export class HomeComponent implements OnInit {
   opciones: MenuItem[] = [];
+  permisos = [
+    { id: 1, nombre: 'Consultar', checked: false },
+    { id: 2, nombre: 'Editar', checked: false },
+    { id: 3, nombre: 'Imprimir', checked: false },
+    { id: 4, nombre: 'Firmar', checked: false },
+  ];
 
   constructor(private router: Router, private ms: MenuService) {}
 
   ngOnInit() {
     this.opciones = this.ms.getItemsMenu().filter((item) => item.descripcion);
+    console.log('Estructura');
+    console.log(this.crearEstructura(datos));
   }
 
   navegar(ruta: string) {
     this.router.navigate([ruta]);
   }
 
-  organizarEstructura(estructura: EstructuraIngresoModel) {
+  crearEstructura(estructura) {
     const estructuraOrganizada: GrupoNodeModel[] = [];
+
     estructura.funcionesVOList.forEach((funcion) => {
       if (funcion.idFuncSubGrupoVO === null) {
         estructura.funcSubGrupoVOList.push({ ...funcion, sinSubGrupo: true });
@@ -44,12 +53,7 @@ export class HomeComponent implements OnInit {
             id: funcion.id,
             nombre: funcion.descripcion,
             checked: funcion.marcaTotal,
-            permisos: [
-              { id: 1, nombre: 'Consultar', checked: false },
-              { id: 2, nombre: 'Editar', checked: false },
-              { id: 3, nombre: 'Imprimir', checked: false },
-              { id: 4, nombre: 'Firmar', checked: false },
-            ],
+            permisos: this.permisos,
           });
         });
         if (subgrupo.sinSubGrupo === true) {
@@ -58,12 +62,7 @@ export class HomeComponent implements OnInit {
             sinSubGrupo: true,
             nombre: subgrupo.descripcion,
             checked: subgrupo.marcaTotal,
-            permisos: [
-              { id: 1, nombre: 'Consultar', checked: false },
-              { id: 2, nombre: 'Editar', checked: false },
-              { id: 3, nombre: 'Imprimir', checked: false },
-              { id: 4, nombre: 'Firmar', checked: false },
-            ],
+            permisos: this.permisos,
           });
         } else {
           subgru.push({
