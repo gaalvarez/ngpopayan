@@ -1,24 +1,58 @@
-<div fxLayout="column wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="start" class="container-layout">
-    <div *appCarousel="let evento from eventos | filterEventos autoplay 'on' withDelay 5000; let ctrl = controller">
-        <mat-card class="main-map-card">
-            <mat-card-header>
-                <mat-icon>group_work</mat-icon>
-                <mat-card-title>{{evento.titulo}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                {{evento.fecha | date:'medium' }}
-            </mat-card-content>
-            <mat-card-actions>
-                <button color="accent" mat-raised-button (click)="verDetalles(evento.id)">Detalles</button>
-            </mat-card-actions>
-        </mat-card>
-        <div fxLayout="row" fxLayoutAlign="center">
-            <button mat-icon-button (click)="ctrl.prev()">
-                <mat-icon>navigate_before</mat-icon>
-            </button>
-            <button mat-icon-button (click)="ctrl.next()">
-                <mat-icon>navigate_next</mat-icon>
-            </button>
-        </div>
+<mat-card>
+  <form [formGroup]="busquedaForm">
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        placeholder="State"
+        aria-label="State"
+        [matAutocomplete]="auto"
+        formControlName="cadenaBusqueda"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let movie of movies$ | async" [value]="movie.Title">
+          <span>{{ movie.Title }}</span> |
+          <small>Id Imbd: {{ movie.imdbID }}</small>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</mat-card>
+
+<div
+  fxLayout="column wrap"
+  fxLayout.lt-sm="column"
+  fxLayoutGap="32px"
+  fxLayoutAlign="start"
+  class="container-layout"
+>
+  <div
+    *appCarousel="
+      let evento;
+      from: eventos | filterEventos;
+      autoplay: 'on';
+      withDelay: 5000;
+      let ctrl = controller
+    "
+  >
+    <mat-card class="main-map-card">
+      <mat-card-header>
+        <mat-icon>group_work</mat-icon>
+        <mat-card-title>{{ evento.titulo }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{ evento.fecha | date: 'medium' }}
+      </mat-card-content>
+      <mat-card-actions>
+        <button color="accent" mat-raised-button (click)="verDetalles(evento.id)">Detalles</button>
+      </mat-card-actions>
+    </mat-card>
+    <div fxLayout="row" fxLayoutAlign="center">
+      <button mat-icon-button (click)="ctrl.prev()">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button mat-icon-button (click)="ctrl.next()">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
     </div>
+  </div>
 </div>
