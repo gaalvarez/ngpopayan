@@ -1,20 +1,31 @@
-<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="start" class="container-layout">
-    <ng-container *ngFor="let opcion of opciones; let i = index">
-        <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
-            <a class="card-link">
-                <mat-card class="main-map-card">
-                    <mat-card-header>
-                        <mat-icon>group_work</mat-icon>
-                        <mat-card-title>{{opcion.titulo}}</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        {{opcion.descripcion}}
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button color="accent" mat-raised-button (click)="navegar(opcion.ruta)">Registrarse</button>
-                    </mat-card-actions>
-                </mat-card>
-            </a>
-        </div>
-    </ng-container>
+<div
+  fxLayout="row wrap"
+  fxLayout.lt-sm="column"
+  fxLayoutGap="32px"
+  fxLayoutAlign="start"
+  class="container-layout"
+>
+  <ng-container *ngFor="let opcion of opciones; let i = index">
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+      <a class="card-link">
+        <mat-card class="main-map-card">
+          <mat-card-header>
+            <mat-icon>group_work</mat-icon>
+            <mat-card-title>{{ opcion.titulo }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            {{ opcion.descripcion }}
+          </mat-card-content>
+          <mat-card-actions>
+            <button color="accent" mat-raised-button (click)="navegar(opcion.ruta)">
+              Registrarse
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </a>
+    </div>
+  </ng-container>
+  <pre>
+    {{ datos | json }}
+  </pre>
 </div>
