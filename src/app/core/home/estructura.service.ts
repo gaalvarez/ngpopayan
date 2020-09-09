@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GrupoNodeModel, EstructuraIngresoModel } from './model';
+import { GrupoNodeModel, EstructuraIngresoModel, FuncionIngresoModel } from './model';
 import { of, Observable } from 'rxjs';
 
 export const datos: EstructuraIngresoModel = {
@@ -81,70 +81,78 @@ export const datos: EstructuraIngresoModel = {
   providedIn: 'root',
 })
 export class EstructuraService {
+  private permisosPorDefecto = [
+    { id: 1, nombre: 'Consultar', checked: false },
+    { id: 2, nombre: 'Editar', checked: false },
+    { id: 3, nombre: 'Imprimir', checked: false },
+    { id: 4, nombre: 'Firmar', checked: false },
+  ];
+
   constructor() {}
 
-  crearEstructura(estructura) {
-    const estructuraOrganizada: GrupoNodeModel[] = [];
-
+  crearEstructura(estructura: EstructuraIngresoModel) {
     estructura.funcionesVOList.forEach((funcion) => {
       if (funcion.idFuncSubGrupoVO === null) {
         estructura.funcSubGrupoVOList.push({ ...funcion, sinSubGrupo: true });
       }
     });
-
-    estructura.funcGrupoVOList.forEach((grupo) => {
-      const subg = estructura.funcSubGrupoVOList.filter(
-        (subgr) => subgr.idFuncGrupoVO === grupo.id,
-      );
-      const subgru: GrupoNodeModel[] = [];
-      subg.forEach((subgrupo) => {
-        const fun = estructura.funcionesVOList.filter(
-          (funcio) => funcio.idFuncSubGrupoVO === subgrupo.id,
-        );
-        const funci: GrupoNodeModel[] = [];
-        fun.forEach((funcion) => {
-          funci.push({
-            id: funcion.id,
-            nombre: funcion.descripcion,
-            checked: funcion.marcaTotal,
-            permisos: [
-              { id: 1, nombre: 'Consultar', checked: false },
-              { id: 2, nombre: 'Editar', checked: false },
-              { id: 3, nombre: 'Imprimir', checked: false },
-              { id: 4, nombre: 'Firmar', checked: false },
-            ],
-          });
-        });
-        if (subgrupo.sinSubGrupo === true) {
-          subgru.push({
-            id: subgrupo.id,
-            sinSubGrupo: true,
-            nombre: subgrupo.descripcion,
-            checked: subgrupo.marcaTotal,
-            permisos: [
-              { id: 1, nombre: 'Consultar', checked: false },
-              { id: 2, nombre: 'Editar', checked: false },
-              { id: 3, nombre: 'Imprimir', checked: false },
-              { id: 4, nombre: 'Firmar', checked: false },
-            ],
-          });
-        } else {
-          subgru.push({
-            id: subgrupo.id,
-            nombre: subgrupo.descripcion,
-            checked: subgrupo.marcaTotal,
-            subGrupo: funci,
-          });
-        }
-      });
-      estructuraOrganizada.push({
-        id: grupo.id,
-        nombre: grupo.descripcion,
-        checked: grupo.marcaTotal,
-        subGrupo: subgru,
-      });
-    });
+    const estructuraOrganizada: GrupoNodeModel[] = estructura.funcGrupoVOList.map((grupo) =>
+      this.mapearGrupo(estructura, grupo),
+    );
     return estructuraOrganizada;
+  }
+
+  private mapearGrupo(estructura, grupo) {
+    const subgruposOrganizados: GrupoNodeModel[] = estructura.funcSubGrupoVOList
+      .filter((subgr) => subgr.idFuncGrupoVO === grupo.id)
+      .map((subgrupo) => this.mapearSubgrupo(estructura, subgrupo));
+    return this.crearGrupo(grupo, subgruposOrganizados);
+  }
+
+  private mapearSubgrupo(estructura, subgrupo) {
+    const funcionesOrganizadas: GrupoNodeModel[] = estructura.funcionesVOList
+      .filter((funcio) => funcio.idFuncSubGrupoVO === subgrupo.id)
+      .map((funcion) => {
+        return this.crearFuncionMapeada(funcion);
+      });
+    return this.crearSubGrupo(subgrupo, funcionesOrganizadas);
+  }
+
+  private crearFuncionMapeada(funcion: FuncionIngresoModel): GrupoNodeModel {
+    return {
+      id: funcion.id,
+      nombre: funcion.descripcion,
+      checked: funcion.marcaTotal,
+      permisos: this.permisosPorDefecto,
+    };
+  }
+
+  private crearSubGrupo(subgrupo, funcionesOrganizadas) {
+    if (subgrupo.sinSubGrupo === true) {
+      return {
+        id: subgrupo.id,
+        sinSubGrupo: true,
+        nombre: subgrupo.descripcion,
+        checked: subgrupo.marcaTotal,
+        permisos: this.permisosPorDefecto,
+      };
+    } else {
+      return {
+        id: subgrupo.id,
+        nombre: subgrupo.descripcion,
+        checked: subgrupo.marcaTotal,
+        subGrupo: funcionesOrganizadas,
+      };
+    }
+  }
+
+  private crearGrupo(grupo, subgruposOrganizados) {
+    return {
+      id: grupo.id,
+      nombre: grupo.descripcion,
+      checked: grupo.marcaTotal,
+      subGrupo: subgruposOrganizados,
+    };
   }
 
   obtenerEstructura(): Observable<EstructuraIngresoModel> {
