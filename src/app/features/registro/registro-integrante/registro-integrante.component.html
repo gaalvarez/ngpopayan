@@ -1,44 +1,98 @@
-<form [formGroup]="registroForm" fxLayout="row" fxLayoutAlign="center" class="registro-container">
-    <mat-card fxFlex="80%" fxFlex.lt-md="75" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutAlign="start start">
-        <mat-form-field>
-            <input matInput placeholder="Nombres" name="nombres" required formControlName="nombres">
-            <mat-error *ngIf="registroForm.get('nombres').errors?.required">
-                Debe ingresar sus nombres
-            </mat-error>
-        </mat-form-field>
- 
-        <mat-form-field>
-            <input matInput placeholder="Apellidos" name="apellidos" required formControlName="apellidos">
-        </mat-form-field>
- 
-        <mat-form-field>
-            <input matInput placeholder="Correo electrónico" name="correo" required formControlName="correo">
-            <mat-error *ngIf="registroForm.get('correo').errors?.required">
-                Debe ingresar su correo
-            </mat-error>
-            <mat-error *ngIf="registroForm.get('correo').errors?.required">
-                Debe ingresar un formeto correcto de correo
-            </mat-error>
-        </mat-form-field>
- 
-        <mat-form-field>
-            <input type="text" maxlength="10" appNumberOnly matInput placeholder="Celular" formControlName="celular">
-        </mat-form-field>
- 
-        <mat-form-field>
-            <input matInput placeholder="Empresa o Institución" name="empresa" formControlName="empresa">
-        </mat-form-field>
- 
-        <mat-form-field>
-            <mat-select placeholder="Genero" name="genero" formControlName="genero">
-                <mat-option value="M">Masculino</mat-option>
-                <mat-option value="F">Femenino</mat-option>
-            </mat-select>
-        </mat-form-field>
- 
-        <button [disabled]="!registroForm.valid" mat-raised-button  color="accent" (click)="registrarIntegrante()">
-            Registrarse
-        </button>
-    </mat-card>
+<mat-progress-bar *ngIf="enProceso" mode="indeterminate"> </mat-progress-bar>
+<form
+  [formGroup]="registroForm"
+  fxLayout="row"
+  fxLayoutAlign="center"
+  class="registro-container"
+  (ngSubmit)="registrarIntegrante()"
+>
+  <mat-card
+    fxFlex="80%"
+    fxFlex.lt-md="75"
+    fxFlex.lt-sm="100%"
+    fxLayout="column"
+    fxLayoutAlign="start start"
+  >
+    <mat-form-field>
+      <input matInput placeholder="Nombres" name="nombres" required formControlName="nombres" />
+      <mat-error
+        *ngIf="
+          registroForm.get('nombres').errors?.required &&
+          (registroForm.get('nombres').dirty || registroForm.get('nombres').touched)
+        "
+      >
+        Debe ingresar sus nombres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Apellidos"
+        name="apellidos"
+        required
+        formControlName="apellidos"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Correo electrónico"
+        name="correo"
+        required
+        formControlName="correo"
+      />
+      <mat-error *ngFor="let validacion of mensajesDeValidacion.email">
+        <mat-error
+          *ngIf="
+            registroForm.get('correo').hasError(validacion.type) &&
+            (registroForm.get('correo').dirty || registroForm.get('correo').touched)
+          "
+        >
+          {{ validacion.message }}
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        type="text"
+        maxlength="10"
+        matInput
+        appNumberOnly
+        placeholder="Celular"
+        formControlName="celular"
+      />
+      <mat-error *ngIf="registroForm.get('celular').errors?.invalidNumber">
+        Solo se aceptan valores numéricos
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Empresa o Institución"
+        name="empresa"
+        formControlName="empresa"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Genero" name="genero" formControlName="genero">
+        <mat-option value="M">Masculino</mat-option>
+        <mat-option value="F">Femenino</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      [disabled]="!registroForm.valid || enProceso"
+      mat-raised-button
+      color="accent"
+      type="submit"
+    >
+      Registrarse
+    </button>
+  </mat-card>
 </form>
 <app-notificacion [configuracion]="configuracion" #noti></app-notificacion>

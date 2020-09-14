@@ -4,14 +4,13 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class RegistroIntegranteService {
-
   integrantes: IntegranteModel[] = [];
 
-  constructor() { }
+  constructor() {}
 
   guardarIntegrante(integrante: IntegranteModel): Observable<boolean> {
-    return new Observable(observer => {
-      const index = this.integrantes.findIndex(item => item.correo === integrante.correo);
+    return new Observable((observer) => {
+      const index = this.integrantes.findIndex((item) => item.correo === integrante.correo);
       if (index !== -1) {
         observer.error(false);
         observer.complete();
@@ -22,5 +21,4 @@ export class RegistroIntegranteService {
       }
     });
   }
-
 }

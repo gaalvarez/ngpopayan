@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RegistroIntegranteService } from './registro-integrante.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [RegistroIntegranteComponent],
@@ -26,8 +27,9 @@ import { RegistroIntegranteService } from './registro-integrante.service';
     MatCardModule,
     MatButtonModule,
     FlexLayoutModule,
-    SharedModule
+    SharedModule,
+    MatProgressBarModule,
   ],
-  providers: [RegistroIntegranteService]
+  providers: [RegistroIntegranteService],
 })
-export class RegistroModule { }
+export class RegistroModule {}
