@@ -24,7 +24,7 @@ test:
     - npm run test-ci
     - npm run e2e-ci
 
-deploy_prod:
+pages:
   stage: deploy
   environment:
     name: production
