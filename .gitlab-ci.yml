@@ -37,6 +37,7 @@ deploy_prod:
     paths:
       - node_modules/
   script:
+    - mkdir public
     - mv dist/ng-popayan/* public/
   artifacts:
     paths:
