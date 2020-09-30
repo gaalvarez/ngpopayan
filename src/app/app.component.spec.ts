@@ -41,6 +41,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('app-navbar').textContent).toContain('@ngPopayan');
+    expect(compiled.querySelector('app-navbar').textContent).toContain('NgPopayan Live 30 sep');
   });
 });
