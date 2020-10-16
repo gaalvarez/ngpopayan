@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, switchMap, toArray } from 'rxjs/internal/operators';
+import {
+  debounceTime,
+  map,
+  partition,
+  reduce,
+  switchMap,
+  tap,
+  toArray,
+} from 'rxjs/internal/operators';
 import { BookItem, BookSearch, BookView } from './book-search.model';
 import { BookSearchService } from './book-search.service';
 
@@ -11,14 +20,35 @@ import { BookSearchService } from './book-search.service';
 })
 export class BookSearchComponent implements OnInit {
   books$: Observable<BookView[]>;
+  totalAutores$: Observable<number>;
+  formSearch = this.fb.group({
+    search: [''],
+  });
 
-  constructor(private bookSearchService: BookSearchService) {}
+  constructor(private bookSearchService: BookSearchService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.books$ = this.bookSearchService.buscarLibros('rxjs').pipe(
-      switchMap((datos) => datos.items),
-      map((item) => this.buildBookView(item)),
-      toArray(),
+    this.books$ = this.formSearch.controls.search.valueChanges.pipe(
+      debounceTime(500),
+      switchMap((texto) =>
+        this.bookSearchService.buscarLibros(texto).pipe(
+          switchMap((datos) => datos.items),
+          map((item) => this.buildBookView(item)),
+          toArray(),
+        ),
+      ),
+    );
+    this.books$.subscribe((datos) => this.contarAutores());
+  }
+
+  private contarAutores() {
+    this.totalAutores$ = this.books$.pipe(
+      switchMap((datos) => datos),
+      reduce((acumulador: number, book: BookView) => {
+        acumulador = acumulador + book.authors.length;
+        return acumulador;
+      }, 0),
+      tap((dato) => console.log(dato)),
     );
   }
 
